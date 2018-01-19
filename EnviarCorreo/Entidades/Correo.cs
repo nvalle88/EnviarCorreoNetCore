@@ -13,27 +13,28 @@ namespace EnviarCorreo
     public class Correo
     {
 
-        public async Task<bool> Enviar(int tipo, string cuerpo)
+        public  string Enviar(int tipo, string cuerpo)
         {
-      
+
             var Adscmailconf = new Adscmailconf
             {
                 AdcfTipo = tipo
             };
 
-            var respuesta = await Servicio.ObtenerElementoAsync1<ResponseCorreo>(Adscmailconf, new Uri(ConfiguracionCorreo.servicioSeguridad),
-                                                               "/api/Adscmailconfs/ObtenerCorreoSegunTipo");
-            if (!respuesta.IsSuccess)
+            var respuesta = Servicio.ObtenerElementoAsync1<ResponseCorreo>(Adscmailconf, new Uri(ConfiguracionCorreo.servicioSeguridad),
+                                                               "api/Email/obtenerCorreo");
+            if (!respuesta.Result.IsSuccess)
             {
-                return false;
+                return "true";
             }
-            var sdscmailconf = JsonConvert.DeserializeObject<Adscmailconf>(respuesta.Resultado.ToString());
-            return await SendEmailAsync(sdscmailconf.AdcfCorreo, sdscmailconf.AdcfAsunto, cuerpo);
-           
+            var sdscmailconf = JsonConvert.DeserializeObject<Adscmailconf>(respuesta.Result.Resultado.ToString());
+            return  SendEmailAsync(sdscmailconf.AdcfCorreo, sdscmailconf.AdcfAsunto, cuerpo);
+
         }
 
-        public async Task<bool> SendEmailAsync(string email, string subject, string message)
+        public  string SendEmailAsync(string email, string subject, string message)
         {
+            var opcionessocketseguro = SecureSocketOptions.None;
             try
             {
                 var emailMessage = new MimeMessage();
@@ -43,22 +44,48 @@ namespace EnviarCorreo
                 emailMessage.Subject = subject;
                 emailMessage.Body = new TextPart("plain") { Text = message };
 
+               
+                switch (ConfiguracionCorreo.SecureSocketOptions)
+                {
+                    case 1:
+                        opcionessocketseguro = SecureSocketOptions.Auto;
+                        break;
+                    case 2:
+                        opcionessocketseguro = SecureSocketOptions.SslOnConnect;
+                        break;
+                    case 3:
+                        opcionessocketseguro = SecureSocketOptions.StartTls;
+                        break;
+                    case 4:
+                        opcionessocketseguro = SecureSocketOptions.StartTlsWhenAvailable;
+                        break;
+                }
+
                 using (var client = new SmtpClient())
                 {
-                    client.LocalDomain = ConfiguracionCorreo.DominioPrimario;
-                    await client.ConnectAsync(ConfiguracionCorreo.HostUri, ConfiguracionCorreo.PuertoPrimario, SecureSocketOptions.None).ConfigureAwait(false);
-                    await client.SendAsync(emailMessage).ConfigureAwait(false);
-                    await client.DisconnectAsync(true).ConfigureAwait(false);
+                    client.Connect(ConfiguracionCorreo.HostUri, ConfiguracionCorreo.PuertoPrimario, opcionessocketseguro);
+                    client.Authenticate(ConfiguracionCorreo.NombreUsuario, ConfiguracionCorreo.Contrasenia);
+                     client.Send(emailMessage);
+                     client.Disconnect(true);
                 }
-                return true;
+                return "true";
             }
-            catch (Exception )
+            catch (Exception ex)
             {
 
-                return false;
+                return ex.Message + "ConfiguracionCorreo.NombreEmisor= " + ConfiguracionCorreo.NombreEmisor+"\n"
+                    + "ConfiguracionCorreo.DeEmail= " + ConfiguracionCorreo.DeEmail + "\n"
+                    + "ConfiguracionCorreo.NombreReceptor= " + ConfiguracionCorreo.NombreReceptor + "\n"
+                    + "email= " + email + "\n"
+                    + "ConfiguracionCorreo.SecureSocketOptions" + ConfiguracionCorreo.SecureSocketOptions
+                    + "ConfiguracionCorreo.HostUri" + ConfiguracionCorreo.HostUri
+                    + "ConfiguracionCorreo.PuertoPrimario"+ ConfiguracionCorreo.PuertoPrimario
+                    + "opcionessocketseguro" + opcionessocketseguro
+                    + "ConfiguracionCorreo.NombreUsuario" + ConfiguracionCorreo.NombreUsuario
+                    + "ConfiguracionCorreo.Contrasenia" + ConfiguracionCorreo.Contrasenia
+                    ;
             }
         }
     }
-}  
- 
+}
 
