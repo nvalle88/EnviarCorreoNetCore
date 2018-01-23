@@ -25,7 +25,7 @@ namespace EnviarCorreo
                                                                "api/Email/obtenerCorreo");
             if (!respuesta.Result.IsSuccess)
             {
-                return "true";
+                return "false";
             }
             var sdscmailconf = JsonConvert.DeserializeObject<Adscmailconf>(respuesta.Result.Resultado.ToString());
             return  SendEmailAsync(sdscmailconf.AdcfCorreo, sdscmailconf.AdcfAsunto, cuerpo);
