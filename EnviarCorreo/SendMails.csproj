@@ -1,0 +1,92 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.4</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.2.4</Version>
+    <FileVersion>1.2.4.0</FileVersion>
+    <AssemblyVersion>1.2.4.0</AssemblyVersion>
+    <PackageId>SendMailSMTPNet.Core</PackageId>
+    <Description>Submit Email SMTP  Asp.Net Core</Description>
+    <PackageReleaseNotes>//Static class MailConf 
+            MailConfig.HostUri = "smtp.gmail.com";
+            MailConfig.PrimaryPort = 465;
+            MailConfig.SecureSocketOptions = 2;
+
+//Class for submit the email 
+            var mail = new Mail
+            {
+                Password = "password"
+                                 ,
+                Body = "My Body"
+                                 ,
+                EmailFrom = "emailfrom@gmail.com"
+                                 ,
+                EmailTo = "emailto@gmail.com"
+                                 ,
+                NameFrom = "Name From"
+                                 ,
+                NameTo = "Name To"
+                                 ,
+                Subject = "My Subject"
+            };
+            //execute the method Send Mail or SendMailAsync
+            var a= Emails.SendEmail(mail);
+
+
+//Lists the emails
+//Class for submit the email 
+var mail = new Mail
+            {
+                Password = "password"
+                                 ,
+                Body = "My Body"
+                                 ,
+                EmailFrom = "emailfrom@gmail.com"
+                                 ,
+                EmailTo = "emailto@gmail.com"
+                                 ,
+                NameFrom = "Name From"
+                                 ,
+                NameTo = "Name To"
+                                 ,
+                Subject = "My Subject"
+            };
+//Class for submit the email 
+            var mail1 = new Mail
+            {
+                Password = "password_1"
+                                 ,
+                Body = "My Body 1"
+                                 ,
+                EmailFrom = "emailfrom_1@gmail.com"
+                                 ,
+                EmailTo = "emailto_1@gmail.com"
+                                 ,
+                NameFrom = "Name From 1"
+                                 ,
+                NameTo = "Name To 1"
+                                 ,
+                Subject = "My Subject 1"
+            };
+//add to list
+            var list = new List&lt;Mail&gt;();
+            list.Add(mail);
+            list.Add(mail1);
+
+//SendEmail or SendEmailAsync 
+            await Emails.SendEmailAsync(alis);</PackageReleaseNotes>
+    <Authors>Nestor Valle y Paul Cevallos</Authors>
+    <Company>Digital Strategy Ecuador</Company>
+    <Product>Send Mail SMTP .Net Core</Product>
+    <PackageIconUrl>https://www.facebook.com/digitalstrategyec/photos/a.176926689455080.1073741825.176926432788439/176934256120990/?type=1&amp;theater</PackageIconUrl>
+    <RepositoryUrl>https://github.com/nvalle88/EnviarCorreoNetCore</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/nvalle88/EnviarCorreoNetCore</PackageProjectUrl>
+    <Copyright>Digital Strategy</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="1.10.0" />
+  </ItemGroup>
+
+</Project>
