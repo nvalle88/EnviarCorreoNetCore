@@ -1,4 +1,5 @@
-﻿using MimeKit;
+﻿using EnviarCorreo;
+using MimeKit;
 using SendMails.methods;
 
 namespace SendMails.Utils
@@ -8,7 +9,7 @@ namespace SendMails.Utils
         public static MailBox InicializeMessage(Mail mail)
         {
             var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress(mail.NameFrom, mail.EmailFrom));
+            emailMessage.From.Add(new MailboxAddress(MailConfig.NameFrom, MailConfig.EmailFrom));
             emailMessage.To.Add(new MailboxAddress(mail.NameTo, mail.EmailTo));
             emailMessage.Subject = mail.Subject;
             emailMessage.Body = new TextPart("plain") { Text = mail.Body };

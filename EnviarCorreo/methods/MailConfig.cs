@@ -30,5 +30,17 @@
         /// </summary>
         public static int SecureSocketOptions { get; set; }
 
+        public static bool RequireAuthentication { get; set; }
+
+
+
+        public static string UserName { get; set; }
+
+        public static string Password { get; set; }
+
+        public static string NameFrom { get; set; }
+
+        public static string EmailFrom { get; set; }
+
     }
 }

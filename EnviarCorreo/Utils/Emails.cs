@@ -20,7 +20,10 @@ namespace EnviarCorreo
                 using (var client = new SmtpClient())
                 {
                     client.Connect(MailConfig.HostUri, MailConfig.PrimaryPort, SecureSocketOption.GetSecureSocketOptions());
-                    client.Authenticate(mailBox.Mail.EmailFrom, mailBox.Mail.Password);
+                    if (MailConfig.RequireAuthentication)
+                    {
+                        client.Authenticate(MailConfig.UserName, MailConfig.Password);
+                    };
                     client.Send(mailBox.MimeMessage);
                     client.Disconnect(true);
                 }
@@ -32,14 +35,18 @@ namespace EnviarCorreo
             }
         }
 
-        private  static async Task<string> SendingEmailAsync(MailBox mailBox)
+
+        private  static async Task<string> SendingEmailAsync(MailBox mailBox )
         {
             try
             {
                 using (var client = new SmtpClient())
                 {
                     client.Connect(MailConfig.HostUri, MailConfig.PrimaryPort, SecureSocketOption.GetSecureSocketOptions());
-                    client.Authenticate(mailBox.Mail.EmailFrom, mailBox.Mail.Password);
+                    if (MailConfig.RequireAuthentication)
+                    {
+                        client.Authenticate(MailConfig.UserName, MailConfig.Password);
+                    }
                     await client.SendAsync(mailBox.MimeMessage);
                     client.Disconnect(true);
                 }
@@ -60,7 +67,7 @@ namespace EnviarCorreo
         /// </summary>
         /// <param name="mail"></param>
         /// <returns>Is Success return true else return the exception</returns>
-        public static string SendEmail(Mail mail)
+        public static string SendEmail(Mail mail )
         {
             try
             {
@@ -105,7 +112,7 @@ namespace EnviarCorreo
         /// </summary>
         /// <param name="mail"></param>
         /// <returns>If is Success return true else return the exception</returns>
-        public static async  Task<string> SendEmailAsync(Mail mail)
+        public static async  Task<string> SendEmailAsync(Mail mail )
         {
             try
             {
@@ -123,7 +130,7 @@ namespace EnviarCorreo
         /// </summary>
         /// <param name="list"></param>
         /// <returns>If is Success return true else return the exception</returns>
-        public static async Task<string> SendEmailAsync(List<Mail> list)
+        public static async Task<string> SendEmailAsync(List<Mail> list )
         {
             try
             {

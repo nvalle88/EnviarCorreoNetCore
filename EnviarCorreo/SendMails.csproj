@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.2.4</Version>
-    <FileVersion>1.2.4.0</FileVersion>
-    <AssemblyVersion>1.2.4.0</AssemblyVersion>
+    <Version>1.2.6</Version>
+    <FileVersion>1.2.6.0</FileVersion>
+    <AssemblyVersion>1.2.6.0</AssemblyVersion>
     <PackageId>SendMailSMTPNet.Core</PackageId>
     <Description>Submit Email SMTP  Asp.Net Core</Description>
     <PackageReleaseNotes>//Static class MailConf 
