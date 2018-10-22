@@ -47,6 +47,7 @@ namespace EnviarCorreo
                     {
                         client.Authenticate(MailConfig.UserName, MailConfig.Password);
                     }
+                    
                     await client.SendAsync(mailBox.MimeMessage);
                     client.Disconnect(true);
                 }

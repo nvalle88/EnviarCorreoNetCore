@@ -14,8 +14,8 @@ namespace ConsoleApp1
             MailConfig.PrimaryPort = 465;
             MailConfig.SecureSocketOptions = 2;
             MailConfig.RequireAuthentication = true;
-            MailConfig.UserName = "nestorvalle880416@gmail.com";
-            MailConfig.Password = "Nvr1604**@NVR";
+            MailConfig.UserName = "";
+            MailConfig.Password = "";
 
             MailConfig.EmailFrom = "PEPITO";
             MailConfig.NameFrom = "PEPE";
@@ -25,9 +25,9 @@ namespace ConsoleApp1
             
                 var mail = new Mail
                 {
-                    Body = "Prueba Correos"
+                    Body = "<b>Prueba Correos</b>"
                                ,
-                    EmailTo = "nestorvalle880416@gmail.com"
+                    EmailTo = ""
                                ,
                     NameTo = "Usuario"
                                ,
@@ -35,47 +35,12 @@ namespace ConsoleApp1
                 };
 
 
-            var mail1 = new Mail
-            {
-                Body = "Prueba Correos"
-                             ,
-                EmailTo = "rodolfo.escobar@bde.fin.ec"
-                             ,
-                NameTo = "Usuario"
-                             ,
-                Subject = "Prueba Correos",
-            };
-
-            var mail2 = new Mail
-            {
-                Body = "Prueba Correos"
-                            ,
-                EmailTo = "mirna.fernandez@bde.fin.ec"
-                            ,
-                NameTo = "Usuario"
-                            ,
-                Subject = "Prueba Correos",
-            };
-
-            var mail3 = new Mail
-            {
-                Body = "Prueba Correos"
-                           ,
-                EmailTo = "lorena.arroyo@bde.fin.ec"
-                           ,
-                NameTo = "Usuario"
-                           ,
-                Subject = "Prueba Correos",
-            };
-
 
             listaCorreo.Add(mail);
-            listaCorreo.Add(mail1);
-            listaCorreo.Add(mail2);
-            listaCorreo.Add(mail3);
+           
 
             //execute the method Send Mail or SendMailAsync
-            var a = Emails.SendEmailAsync(mail);
+            var a = Emails.SendEmailAsync(listaCorreo);
             Console.WriteLine(a);
             Console.ReadLine();
 

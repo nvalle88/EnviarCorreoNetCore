@@ -12,7 +12,7 @@ namespace SendMails.Utils
             emailMessage.From.Add(new MailboxAddress(MailConfig.NameFrom, MailConfig.EmailFrom));
             emailMessage.To.Add(new MailboxAddress(mail.NameTo, mail.EmailTo));
             emailMessage.Subject = mail.Subject;
-            emailMessage.Body = new TextPart("plain") { Text = mail.Body };
+            emailMessage.Body = new TextPart("html") { Text = mail.Body };
             return new MailBox { Mail=mail,MimeMessage=emailMessage};
         }
 
